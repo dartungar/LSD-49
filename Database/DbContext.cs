@@ -4,7 +4,7 @@ using Database.Models;
 
 namespace Database
 {
-    public class AppContext
+    public class DbContext
     {
         private IMongoDatabase db;
         private GenericRepository<User> users;
@@ -13,7 +13,7 @@ namespace Database
             get { return users; }
             private set { users = value; }
         }
-        public AppContext(string dbname)
+        public DbContext(string dbname)
         {
             var client = new MongoClient();
             db = client.GetDatabase(dbname);

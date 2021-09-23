@@ -1,20 +1,28 @@
 ﻿using System;
-using Database;
-using Database.Models;
+using Service;
 
 namespace ConsoleApp
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            var db = new Database.AppContext("TestDB");
-            var user = new User() { FirstName = "Vasily", LastName = "The Great" };
-            db.Users.Insert(user);
-            var users = db.Users.GetList();
-            foreach (var u in users)
+            var db = new Database.DbContext("TestDB");
+            var userService = new UserService(db);
+            var isRunning = true;
+            while (isRunning)
             {
-                Console.WriteLine(u.FirstName);
+                Console.WriteLine("Press Enter to add random user to DB:");
+                var key = Console.ReadKey();
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    var user = userService.GenerateRandomUser();
+                    userService.AddUser(user);
+                    Console.WriteLine($"Added user {user.FirstName} {user.LastName} to DB.\n");
+                } else
+                {
+                    isRunning = false;
+                }
             }
         }
     }
