@@ -1,5 +1,6 @@
 ﻿using System;
 using MongoDB.Driver;
+using MongoDB.Bson;
 using Database.Models;
 
 namespace Database
@@ -18,6 +19,13 @@ namespace Database
             var client = new MongoClient();
             db = client.GetDatabase(dbname);
             users = new GenericRepository<User>(db, "Users");
+            // create single-column index
+            users.CreateIndex("FirstName"); 
+            // create multi-column index
+            users.CreateIndex(new BsonDocument { 
+                { "FirstName", 1 }, 
+                { "LastName", 1 } 
+            });
         }
 
     }
