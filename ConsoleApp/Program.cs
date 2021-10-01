@@ -21,6 +21,7 @@ namespace ConsoleApp
                     Console.WriteLine($"Added user {user.FirstName} {user.LastName} to DB.\n");
                 } else
                 {
+                    Console.WriteLine("Shutting down...");
                     isRunning = false;
                 }
             }
